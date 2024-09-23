@@ -33,7 +33,6 @@
 ##### ЗАДАНИЕ 5
 
 def is_prime(num):
-    num = abs(num)
     if num <= 1:
         return False
     for i in range(2, num):
