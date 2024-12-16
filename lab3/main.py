@@ -8,7 +8,7 @@ def read_file(file_path, read_mode='full'):
                 for line in file:
                     print(line, end='')
             else:
-                print("на выбор только full или line.")
+                print("только full или line.")
     except FileNotFoundError:
         print(f"Файл {file_path} не найден.")
 
