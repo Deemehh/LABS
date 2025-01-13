@@ -2,21 +2,38 @@ class UserAccount:
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
-        self.password = password
+        self.__password = password
 
     def set_password(self, new_password):
-        self.password = new_password
+        self.__password = new_password
         print("Пароль успешно изменен.")
 
     def check_password(self, password):
-        return self.password == password
+        return self.__password == password
 
-user = UserAccount("ivandeluxe", "ivandeluxe@mail.ru", "password1")
 
-print("Проверка пароля 'password1':", user.check_password("password1"))
+def create_user_account():
+    print("Создание аккаунта")
+    username = input("Введите имя пользователя: ")
 
-user.set_password("password2")
+    while True:
+        email = input("Введите электронную почту: ")
+        if "@" in email:
+            break
+        else:
+            print("Это не почта, попробуйте еще раз")
 
-print("Проверка пароля 'password2':", user.check_password("password2"))
+    password = input("Введите пароль: ")
+    return UserAccount(username, email, password)
 
-print("Проверка пароля 'password1':", user.check_password("password1"))
+
+user = create_user_account()
+
+input_password = input("Введите пароль для проверки: ")
+print("Проверка пароля:", user.check_password(input_password))
+
+new_password = input("Введите новый пароль: ")
+user.set_password(new_password)
+
+input_password = input("Введите пароль для проверки: ")
+print("Проверка пароля:", user.check_password(input_password))
