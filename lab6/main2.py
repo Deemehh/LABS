@@ -17,5 +17,5 @@ class Car(Vehicle):
 vehicle = Vehicle("BMW", "X3")
 print(vehicle.get_info())
 
-car = Car("Tesla", "Cybertruck", "Electric")
+car = Car("Tesla", "Cybertruck", "Электричество")
 print(car.get_info())
