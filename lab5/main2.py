@@ -8,10 +8,25 @@ class Circle:
     def set_radius(self, new_radius):
         self.radius = new_radius
 
-circle = Circle(24)
+
+def input_radius(prompt):
+    while True:
+        try:
+            radius = float(input(prompt))
+            if radius > 0: 
+                return radius
+            else:
+                print("Ошибка: радиус должен быть положительным числом. Попробуйте снова.")
+        except ValueError:
+            print("Ошибка: введите число.")
+
+
+initial_radius = input_radius("Введите начальный радиус круга: ")
+circle = Circle(initial_radius)
 
 print("Текущий радиус круга:", circle.get_radius())
 
-circle.set_radius(53)
+new_radius = input_radius("Введите новый радиус круга: ")
+circle.set_radius(new_radius)
 
 print("Новый радиус круга:", circle.get_radius())
