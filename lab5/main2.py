@@ -9,16 +9,16 @@ class Circle:
         self.radius = new_radius
 
 
-def input_radius(prompt):
+def input_radius(erm):
     while True:
         try:
-            radius = float(input(prompt))
+            radius = float(input(erm))
             if radius > 0: 
                 return radius
             else:
-                print("Ошибка: радиус должен быть положительным числом. Попробуйте снова.")
+                print("радиус должен быть положительным числом.")
         except ValueError:
-            print("Ошибка: введите число.")
+            print("введите число.")
 
 
 initial_radius = input_radius("Введите начальный радиус круга: ")
