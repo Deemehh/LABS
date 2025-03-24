@@ -4,54 +4,77 @@ class Employee:
         self.id = id
 
     def get_info(self):
-        return self.name, self.id
+        return f"Имя: {self.name}, ID: {self.id}"
 
 
 class Manager(Employee):
-    def __init__(self, name, id, department=''):
+    def __init__(self, name, id, department="Отдел продаж"):
         super().__init__(name, id)
         self.department = department
 
-    def manage_project(self, ):
-        return f'Управляет отделом - {self.department}'
+    def manage_project(self, project_name):
+        return f"Менеджер {self.name} управляет проектом: {project_name}"
+
+    def get_info(self):
+        return f"{super().get_info()}, Отдел: {self.department}"
 
 
 class Technician(Employee):
-    def __init__(self, name, id, specialization=''):
+    def __init__(self, name, id, specialization=""):
         super().__init__(name, id)
         self.specialization = specialization
 
-    def perform_maintenance(self):
-        return f"Выполнение технического обслуживания: {self.specialization}"
+    def get_info(self):
+        return f"{super().get_info()}, Специализация: {self.specialization}"
+
+    def perform_maintenance(self, task=None):
+        if task is None:
+            task = self.specialization
+        return f"Техник {self.name} выполняет техническое обслуживание в области {task}"
 
 
 class TechManager(Manager, Technician):
     def __init__(self, name, id, department, specialization):
-        super().__init__(name, id)
-        self.department = department
-        self.specialization = specialization
+        Manager.__init__(self, name, id, department)
+        Technician.__init__(self, name, id, specialization)
+        self.team = []
 
     def add_employee(self, employee):
-        if not hasattr(self, 'team'):
-            self.team = []
         self.team.append(employee)
 
     def get_team_info(self):
-        if hasattr(self, 'team'):
-            return [emp.get_info() for emp in self.team]
-        return "Нет сотрудников"
+        team_info = "Список сотрудников:\n"
+        for emp in self.team:
+            team_info += f"Имя: {emp.name}, ID: {emp.id}\n"
+        return team_info
+
+    def get_info(self):
+        return (f"{super().get_info()}")
 
 
-emp1 = Employee('Козлов К.К.', 4)
-emp2 = Employee('Морозов М.М.', 13)
-manager1 = Manager('Новиков Н.Н.', 6, 'Маркетинг')
-technician1 = Technician('Павлов П.П.', 2, 'Системное администрирование')
-tech_manager = TechManager('Федоров Ф.Ф.', 43, 'Отдел сетевых технологий', 'Настройка серверов')
+emp1 = Employee("Козлов К.К.", "1")
+man1 = Manager('Морозов М.М.', '2', 'Отдел продаж')
+tech1 = Technician('Павлов П.П.', '3', 'Системный администратор')
+tm1 = TechManager("Федоров Ф.Ф.", "4", 'Управление командой', 'Глава отдела')
 
-tech_manager.add_employee(emp1)
-tech_manager.add_employee(emp2)
+print("Данные о сотруднике:")
+print(emp1.get_info(), "\n")
 
-print(tech_manager.get_info())
-print(manager1.manage_project())
-print(technician1.perform_maintenance())
-print(tech_manager.get_team_info())
+print("Данные о менеджере:")
+print(man1.get_info())
+print(man1.manage_project("Продажи"), "\n")
+
+print("Данные о технике:")
+print(tech1.get_info())
+print(tech1.perform_maintenance("Настройка серверов"), "\n")
+
+print("Данные о тех.менеджере:")
+print(tm1.get_info())
+print(tm1.manage_project("Набор сотрудников в команду"))
+print(tm1.perform_maintenance("Собрание команды"), "\n")
+
+tm1.add_employee(emp1)
+tm1.add_employee(man1)
+tm1.add_employee(tech1)
+
+print(tm1.get_team_info())
